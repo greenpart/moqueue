@@ -45,6 +45,8 @@ module Moqueue
     end
     
     def attach_queue(queue, opts={})
+      opts = {:key => 'global') if opts.nil?
+      
       if topic
         attached_queues << [queue, TopicBindingKey.new(opts[:key])]
       elsif direct
