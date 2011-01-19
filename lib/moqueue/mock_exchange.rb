@@ -1,7 +1,7 @@
 module Moqueue
   
   class MockExchange
-    attr_reader :topic, :fanout, :direct
+    attr_reader :topic, :fanout, :direct, :name
     
     class << self
       
@@ -24,6 +24,7 @@ module Moqueue
     end
     
     def initialize(opts={})
+      @name = opts[:name] || 'mock_exchange'
       if @topic = opts[:topic]
         MockBroker.instance.register_topic_exchange(self)
       elsif @fanout = opts[:fanout]
@@ -45,8 +46,6 @@ module Moqueue
     end
     
     def attach_queue(queue, opts={})
-      opts = {:key => 'global') if opts.nil?
-      
       if topic
         attached_queues << [queue, TopicBindingKey.new(opts[:key])]
       elsif direct
