@@ -106,14 +106,6 @@ module Moqueue
   end
 end
 
-if defined?(::Spec::Runner)
-  if Spec::Runner.respond_to?(:configure)
-    Spec::Runner.configure do |config|
-      config.include(::Moqueue::Matchers)
-    end
-  elsif defined?(::Rspec) && Rspec.respond_to?(:configure)
-    Rspec.configure do |config|
-      config.include(::Moqueue::Matchers)
-    end
-  end
+RSpec.configure do |config|
+  config.include(::Moqueue::Matchers)
 end

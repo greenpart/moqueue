@@ -1,8 +1,8 @@
 module Moqueue
 
   class MockExchange
-    attr_reader :topic, :fanout, :direct
-
+    attr_reader :topic, :fanout, :direct, :name
+    
     class << self
 
       def new(opts={})
@@ -24,6 +24,7 @@ module Moqueue
     end
 
     def initialize(opts={})
+      @name = opts[:name] || 'mock_exchange'
       if @topic = opts[:topic]
         MockBroker.instance.register_topic_exchange(self)
       elsif @fanout = opts[:fanout]
